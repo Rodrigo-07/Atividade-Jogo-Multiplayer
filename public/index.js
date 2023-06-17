@@ -1,5 +1,9 @@
 var socket = io();
 
+var jogada_player1 = "";
+var jogada_player2 = "";
+
+
 console.log($("#pedra").val())
 
 $("#pedra_p1").click(function(e){
@@ -36,17 +40,21 @@ $("#tesoura_p2").click(function(e){
 
 // Detecta quando um usuário envia uma jogada e printa esssa jogada na tela
 socket.on('jogada_player1_resultado', function(jogada) {
-    $("#player1_escolha").html("Player 1: " + jogada);
+    // $("#player1_escolha").html("Player 1: " + jogada);
+    jogada_player1 = jogada;
     $("#aguarde").html("Aguardando jogada do player 2");
   });
 
 socket.on('jogada_player2_resultado', function(jogada) {
     $("#aguarde").html("");
-    $("#player2_escolha").html("Player 2: " + jogada);
+    jogada_player2 = jogada;
+    // $("#player2_escolha").html("Player 2: " + jogada);
   });
 
 socket.on('resultado_final', function(resultado) {
     console.log(resultado)
     $("#aguarde").html("");
-    $("#resultado").html("Vencedor " + resultado)
+    $("#player1_escolha").html("Player 1: " + jogada_player1);
+    $("#player2_escolha").html("Player 2: " + jogada_player2);
+    $("#resultado").html("Vencedor: " + resultado)
   });
